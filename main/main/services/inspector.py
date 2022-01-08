@@ -17,6 +17,7 @@ terminal_id = "T0"
 
 # The broker name or IP address - server.
 broker = "192.168.56.1"
+#broker = "localhost"
 
 # The MQTT client.
 client = mqtt.Client()
@@ -32,6 +33,7 @@ def process_message(client, userdata, message):
     message_decoded = (str(message.payload.decode("utf-8"))).split(",")
 
     date = time.strptime(message_decoded[2], "%d/%m/%Y %H:%M")
+    # Update view after 2000ms (2s) to simulate waiting for response
     if date > time.strptime(time.strftime("%d/%m/%Y %H:%M"), "%d/%m/%Y %H:%M"):
         root.after(2000, show_card_info, message_decoded[0], message_decoded[1], True, message_decoded[2])
     else:
@@ -101,17 +103,30 @@ def show_card_info(name, surname, valid, validTo):
     return_btn = tk.Button(frame, text="Powrót", command=show_main)
     return_btn.place(relx=0.375, rely=0.65, relwidth=0.25, relheight=0.15)
 
-# Handling event simulating scanning card
+# Handling event simulating scanning card - only one key
+# If you want to use it - uncomment "bind" line and comment lines with id_input, id_btn in show_main
 def handler(event):
     if not event.char.isdigit():
         return
     root.unbind("<Key>")    
+    show_waiting()
+    call_worker(event.char)
+
+# Screen showing confirmation of the scan and an ask for waiting.
+def show_waiting():
     frame = root.winfo_children()[0].winfo_children()[0]
     clean_widget(frame)
 
     label = tk.Label(frame, text="Zeskanowano kartę. Proszę czekać")
     label.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.9)
-    call_worker(event.char)
+
+# Substitute of event handler but for entries and buttons
+def after_scanned(card_id):
+    for char in card_id:
+        if not char.isdigit():
+            return
+    show_waiting()
+    call_worker(card_id)
 
 # Main window and frame
 def create_main_window():
@@ -133,14 +148,20 @@ def clean_widget(widget):
 # First screen - waiting for card
 def show_main():
     # Binding event handler on key press
-    root.bind("<Key>", handler)
+    #root.bind("<Key>", handler)
 
     frame = root.winfo_children()[0].winfo_children()[0]
 
     clean_widget(frame)
 
     intro_label = tk.Label(frame, text="Proszę przyłożyć kartę:")
-    intro_label.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.9)
+    intro_label.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.25)
+
+    id_input = tk.Entry(frame)
+    id_input.place(relx=0.20, rely=0.3, relwidth=0.4, relheight=0.1)
+
+    id_btn = tk.Button(frame, text="Skanuj", command=lambda: after_scanned(id_input.get()))
+    id_btn.place(relx=0.60, rely=0.3, relwidth=0.2, relheight=0.1)
 
 
 def run_sender():
