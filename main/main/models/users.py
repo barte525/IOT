@@ -80,3 +80,15 @@ class Seller(models.Model):
         except Seller.DoesNotExist:
             return False
 
+
+def create_init_users():
+    bartek = User.objects.create_user(email='bartek@gmail.com', password='Oo', name='Bartek', surname='Nowak')# Chudzik12 po zmianie hasla
+    bartek.save()
+    CardOwner(user=bartek).save()
+    martyna = User.objects.create_user(email='martyna@gmail.com', password='Oo', name='Martyna', surname='Grzegorczyk')# Chudzik12 po zmiane hasła
+    martyna.save()
+    Seller(user=martyna).save()
+    martyna = User.objects.create_user(email='pawel@gmail.com', password='Oo', name='pawel', surname='pawel')
+    martyna.save()
+    CardOwner(user=martyna).save()
+
