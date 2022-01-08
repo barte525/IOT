@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from main.views.manage_profiles import ManageProfiles
+from main.views.main import Main
 
 urlpatterns = [
+    path('', Main.as_view()),
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name="login.html")),
-    path('profile/', ManageProfiles.as_view())
+    path('logowanie/', auth_views.LoginView.as_view(template_name="login.html")),
+    path('profil/', ManageProfiles.as_view())
 ]

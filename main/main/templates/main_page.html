@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Count points{% endblock %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'register_style.css' %}">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                       crossorigin="anonymous">
+
+{% endblock %}
+
+{% block above_content %}
+    <h1>System obsługi biletów okresowych</h1>
+{% endblock %}
+
+{% block content %}
+    <p>Aby skorzystać z serwisu, zaloguj się.</p>
+    <a href="/" class="btn btn-primary btn-lg" role="button">Przejdź do strony logowania.</a>
+{% endblock %}
