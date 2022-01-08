@@ -2,12 +2,21 @@
 <html>
 <head>
     <meta charset="urf-8">
-    <title>{% block title %}Odznaka{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'base_style.css' %}">
+
+    {% block head %} {% endblock %}
 </head>
 
 <body>
+    <header>
+        {% block above_content %}{% endblock %}
+    </header>
     <main>
         {% block content %}{% endblock %}
     </main>
+    {% block below_content %} {% endblock %}
 </body>
 </html>
