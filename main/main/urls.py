@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from main.views.manage_profiles import ManageProfiles
+from main.views.manage_profiles import ManageProfiles, CardOwnerView, SellerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name="login.html")),
-    path('profile/', ManageProfiles.as_view())
+    path('profile/', ManageProfiles.as_view()),
+    path('profile/cardOwner/', CardOwnerView.as_view()),
+    path('profile/seller/', SellerView.as_view()),
+    path('profile/passwordChange/', auth_views.PasswordChangeView.as_view(success_url='/profile/cardOwner/',
+                                                                          template_name='password_change.html'))
 ]

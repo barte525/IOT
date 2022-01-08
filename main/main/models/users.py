@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=50,
@@ -43,11 +44,19 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def set_password(self, password):
+        super(User, self).set_password(password)
+        if CardOwner.objects.filter(user=self.id).exists():
+            CardOwner.objects.filter(user=self.id).update(force_password_change=False)
+
 
 class CardOwner(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     force_password_change = models.BooleanField(default=True)
+
+    def force_password_change_check(self):
+        return self.force_password_change
 
 
 class Seller(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
