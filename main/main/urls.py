@@ -22,6 +22,6 @@ from main.views.main import Main
 urlpatterns = [
     path('', Main.as_view()),
     path('admin/', admin.site.urls),
-    path('logowanie/', auth_views.LoginView.as_view(template_name="login.html")),
-    path('profil/', ManageProfiles.as_view())
+    path('login/', auth_views.LoginView.as_view(template_name="login.html")),
+    path('profile/', ManageProfiles.as_view())
 ]
