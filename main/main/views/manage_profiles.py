@@ -8,29 +8,25 @@ class ManageProfiles(View):
     def get(self, request):
         current_ID = request.user.id
         if CardOwner.objects.filter(user=current_ID).exists():
-            return redirect('/profile/cardOwner')
+            return redirect('/profil/uzytkownikKarty')
         if Seller.objects.filter(user=current_ID).exists():
-            return redirect('/profile/seller')
+            return redirect('/profil/sprzedawca')
         else:
             return HttpResponse("Account is not seller nor cardOwner account")
 
 
 class CardOwnerView(View):
     def get(self, request):
-        try:
-            user = CardOwner.objects.get(user=request.user.id)
-        except CardOwner.DoesNotExist:
+        if not CardOwner.check_permissions(request):
             return HttpResponse("Brak uprawnien")
-        if user.force_password_change_check():
-            return redirect('/profile/passwordChange/')
+        if CardOwner.objects.get(user=request.user.id).force_password_change_check():
+            return redirect('/profil/zmianaHasla/')
         return HttpResponse("Card owner View")
 
 
 class SellerView(View):
     def get(self, request):
-        try:
-            Seller.objects.get(user=request.user.id)
-        except Seller.DoesNotExist:
+        if not Seller.check_permissions(request):
             return HttpResponse("Brak uprawnien")
         return HttpResponse("Seller View")
 

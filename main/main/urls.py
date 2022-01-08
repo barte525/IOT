@@ -17,18 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from main.views.manage_profiles import ManageProfiles, CardOwnerView, SellerView
-from main.views.manage_profiles import ManageProfiles
 from main.views.main import Main
 from main.views.register import RegisterUser
 
 urlpatterns = [
     path('', Main.as_view()),
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name="login.html")),
-    path('profile/', ManageProfiles.as_view()),
-    path('profile/cardOwner/', CardOwnerView.as_view()),
-    path('profile/seller/', SellerView.as_view()),
-    path('profile/passwordChange/', auth_views.PasswordChangeView.as_view(success_url='/profile/cardOwner/',
+    path('zaloguj/', auth_views.LoginView.as_view(template_name="login.html")),
+    path('profil/', ManageProfiles.as_view()),
+    path('profil/uzytkownikKarty/', CardOwnerView.as_view()),
+    path('profil/sprzedawca/', SellerView.as_view()),
+    path('profil/zmianaHasla/', auth_views.PasswordChangeView.as_view(success_url='/profil/uzytkownikKarty/',
                                                                           template_name='password_change.html')),
     path('rejestracja/', RegisterUser.as_view())
 ]

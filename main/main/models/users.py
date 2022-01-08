@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import uuid
 
 
 class UserManager(BaseUserManager):
@@ -31,7 +32,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(
         verbose_name='email address',
         max_length=50,
@@ -51,12 +52,31 @@ class User(AbstractBaseUser):
 
 
 class CardOwner(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     force_password_change = models.BooleanField(default=True)
 
     def force_password_change_check(self):
         return self.force_password_change
 
+    @staticmethod
+    def check_permissions(request):
+        try:
+            CardOwner.objects.get(user=request.user.id)
+            return True
+        except CardOwner.DoesNotExist:
+            return False
+
 
 class Seller(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+
+    @staticmethod
+    def check_permissions(request):
+        try:
+            Seller.objects.get(user=request.user.id)
+            return True
+        except Seller.DoesNotExist:
+            return False
+
