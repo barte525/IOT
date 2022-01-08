@@ -1,6 +1,6 @@
 from django.views import View
-from django.shortcuts import redirect
-from main.models.users import CardOwner, Seller
+from django.shortcuts import redirect, render
+from main.models.users import CardOwner, Seller, User
 from django.http import HttpResponse
 
 
@@ -28,5 +28,9 @@ class SellerView(View):
     def get(self, request):
         if not Seller.check_permissions(request):
             return HttpResponse("Brak uprawnien")
-        return HttpResponse("Seller View")
+
+        current_ID = request.user.id
+        name = User.objects.get(id=current_ID).name
+
+        return render(request, 'seller_profile.html', {'name': name})
 
