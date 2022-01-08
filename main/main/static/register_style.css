@@ -1,0 +1,25 @@
+main {
+    margin: auto;
+}
+
+p {
+    margin: auto;
+    text-align: center;
+}
+
+a {
+    margin: auto;
+}
+
+form {
+    margin-left: 10%;
+    margin-top: 3%;
+}
+
+.form-control {
+    width: 80%;
+}
+
+button {
+    margin-left: 72%;
+}
