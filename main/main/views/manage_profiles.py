@@ -30,7 +30,9 @@ class SellerView(View):
             return HttpResponse("Brak uprawnien")
 
         current_ID = request.user.id
-        name = User.objects.get(id=current_ID).name
+        user = User.objects.get(id=current_ID)
+        name = user.name
+        surname = user.surname
 
-        return render(request, 'seller_profile.html', {'name': name})
+        return render(request, 'seller_profile.html', {'name': name, 'surname': surname})
 

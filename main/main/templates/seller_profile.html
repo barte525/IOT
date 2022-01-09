@@ -14,14 +14,14 @@
 {% endblock %}
 
 {% block above_content %}
-    <h1>Witaj, sprzedawco {{name}}</h1>
+    <h1>Witaj, sprzedawco {{name}} {{surname}}</h1>
 {% endblock %}
 
 {% block content %}
     <div id="register-user">
 <!--         <p>Aby skorzystać z serwisu, zaloguj się.</p>-->
 <!--        <a href="/zaloguj" class="btn btn-primary btn-lg" role="button">Przejdź do strony logowania</a>-->
-        <button class = "btn-primary pull-left">Download</button>
-<button class = "btn-danger pull-right">Mirror</button>
+        <a href="/rejestracja" id="register-href" class="btn btn-primary btn-lg" role="button">Zarejestruj użytkownika karty</a>
+        <a href="#" id="sell-href" class="btn btn-primary btn-lg" role="button">Zakup bilet użytkownikowi karty</a>
     </div>
 {% endblock %}

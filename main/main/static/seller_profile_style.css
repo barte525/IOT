@@ -1,0 +1,20 @@
+#register-user {
+    align-items: center;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 5%;
+}
+
+button {
+    margin: 5%;
+}
+
+#register-href {
+    position: relative;
+    float: left;
+}
+
+#sell-href {
+    position: relative;
+    float: right;
+}
