@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Count points{% endblock %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                       crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'seller_profile_style.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base_style.css' %}">
+
+{% endblock %}
+
+{% block above_content %}
+    <h1>Witaj, sprzedawco {{name}} {{surname}}</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="register-user">
+<!--         <p>Aby skorzystać z serwisu, zaloguj się.</p>-->
+<!--        <a href="/zaloguj" class="btn btn-primary btn-lg" role="button">Przejdź do strony logowania</a>-->
+        <a href="/rejestracja" id="register-href" class="btn btn-primary btn-lg" role="button">Zarejestruj użytkownika karty</a>
+        <a href="#" id="sell-href" class="btn btn-primary btn-lg" role="button">Zakup bilet użytkownikowi karty</a>
+    </div>
+{% endblock %}
