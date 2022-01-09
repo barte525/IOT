@@ -23,14 +23,25 @@
         <form method="POST">
             {% csrf_token %}
                 <div class="form-group row">
-                     <label for="inputCardId" class="col-sm-2 col-form-label">ID Karty</label>
+                     <label for="input-card-id" class="col-sm-2 col-form-label">ID Karty</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputCardId" placeholder="Wprowadź ID Karty" required>
+                            <input type="text" class="form-control" id="input-card-id" placeholder="Wprowadź ID Karty" required>
                         </div>
                 </div>
 
+                <button name="get-ticket-data" class="btn btn-primary" type="submit">Zatwierdź</button>
 
-                <button class="btn btn-primary" type="submit">Zatwierdź</button>
+                <div class="form-group row">
+                    <label for="select-ticket-type" class="col-sm-2 col-form-label">Bilet</label>
+                    <select class="form-select" id="select-ticket-type" aria-label="Wybierz rodzaj biletu" required>
+                        <option selected>Wybierz rodzaj biletu</option>
+                        <option value="1">Miesieczny</option>
+                        <option value="2">Tygodniowy</option>
+                        <option value="3">Trzydniowy</option>
+                    </select>
+                </div>
+
+                <button name="buy-ticket" class="btn btn-primary" type="submit">Zatwierdź</button>
         </form>
     </div>
 {% endblock %}
