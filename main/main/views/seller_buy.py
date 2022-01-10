@@ -27,7 +27,7 @@ class SellerBuyTicketSave(View):
             return HttpResponse("Brak uprawnien")
 
         return render(request, 'seller_buy_ticket_finalize.html', {'cardId': cardId, 'name': "Jan", 'surname': "Kowalski",
-                                                                   'days': '10', 'countedExpDate': '20.04.2022', 'price': '30'})
+                                                                   'days': '10', 'countedExpDate': '20.04.2022', 'price': '10'})
 
     def post(self, request, cardId, ticketId):
         pass
