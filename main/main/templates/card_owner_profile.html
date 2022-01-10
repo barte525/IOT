@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Count points{% endblock %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'seller_profile_style.css' %}">
+{% endblock %}
+
+{% block above_content %}
+    <h1>Witaj {{name}} {{surname}}</h1>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <a href="oferta" id="offers-href" class="btn btn-primary btn-lg" role="button">Przejrzyj ofertę</a>
+        <a href="statusKarty" id="sell-href" class="btn btn-primary btn-lg" role="button">Szczegóły karty</a>
+    </div>
+    <br>
+    <div id="change-pwd">
+        <a href="/profil/zmianaHasla" id="change-password" class="btn btn-primary btn-lg" role="button">Zmień hasło</a>
+    </div>
+{% endblock %}

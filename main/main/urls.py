@@ -20,6 +20,7 @@ from main.views.manage_profiles import ManageProfiles, CardOwnerView, SellerView
 from main.views.main import Main
 from main.views.register import RegisterUser
 from main.views.seller_buy import SellerBuyTicket, SellerBuyTicketSave
+from main.views.card_owner import CardOwnerOfferView, CardOwnerStatusView, CardOwnerBuyTicketView
 
 urlpatterns = [
     path('', Main.as_view()),
@@ -32,5 +33,10 @@ urlpatterns = [
                                                                           template_name='password_change.html')),
     path('profil/sprzedawca/rejestracja/', RegisterUser.as_view()),
     path('profil/sprzedawca/zakupBiletu', SellerBuyTicket.as_view()),
-    path('profil/sprzedawca/zakupBiletu/<uuid:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view())
+    path('profil/sprzedawca/zakupBiletu/<uuid:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
+
+    path('profil/uzytkownikKarty/oferta', CardOwnerOfferView.as_view()),
+    path('profil/uzytkownikKarty/statusKarty', CardOwnerStatusView.as_view()),
+    path('profil/uzytkownikKarty/zakupBiletu', CardOwnerBuyTicketView.as_view()),
+
 ]
