@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Count points{% endblock %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'seller_buy_ticket_style.css' %}">
+{% endblock %}
+
+{% block above_content %}
+    <h1>Zakup biletu na wskazaną kartę</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+                <div class="form-group row">
+                     <label for="input-card-id" class="col-sm-2 col-form-label">ID Karty</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="cardId" class="form-control" id="input-card-id" placeholder="Wprowadź ID Karty" required>
+                        </div>
+                </div>
+
+<!--                <button name="get-ticket-data" class="btn btn-primary" type="submit">Zatwierdź</button>-->
+
+                <div class="form-group row">
+                    <label for="select-ticket-type" class="col-sm-2 col-form-label">Bilet</label>
+                     <div class="col-sm-10">
+                        <select class="form-select" name="ticketId" id="select-ticket-type" aria-label="Wybierz rodzaj biletu" required>
+                            <option value="c5ecbde1-cbf4-11e5-a759-6096cb89d9a5">Bilet na 10 dni; 10zł</option>
+                            <option value="2">Bilet na 20 dni; 20zł</option>
+                            <option value="3">Bilet na 30 dni; 30zł</option>
+                        </select>
+                     </div>
+                </div>
+
+                <button name="buy-ticket" class="btn btn-primary" type="submit">Zatwierdź</button>
+        </form>
+    </div>
+{% endblock %}

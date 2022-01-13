@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Zakup biletu{% endblock %}
+
+{% block above_content %}
+    <h1>Zakup biletu</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+
+        <div class="form-group mb-3 row">
+            .
+            <label class="col-2 offset-3 col-form-label">Liczba dni</label>
+            <div class="col-4">
+                <input type="text" class="form-control" value="7" aria-describedby="basic-addon1" disabled/>
+            </div>
+        </div>
+
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Ważny od</label>
+            <div class="col-4">
+                <input type="text" class="form-control" value="10.01.2022" aria-describedby="basic-addon1" disabled>
+            </div>
+        </div>
+
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Ważny do</label>
+            <div class="col-4">
+                <input type="text" class="form-control" value="16.01.2022" aria-describedby="basic-addon1" disabled>
+            </div>
+        </div>
+
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Cena</label>
+                <div class="input-group mb-3 col-4">
+                    <input type="text" class="form-control" value="30.00" disabled>
+                    <div class="input-group-append">
+                        <span class="input-group-text">zł</span>
+                    </div>
+                </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <button class="btn btn-success mt-4">Dalej</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

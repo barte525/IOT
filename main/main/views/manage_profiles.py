@@ -17,11 +17,17 @@ class ManageProfiles(View):
 
 class CardOwnerView(View):
     def get(self, request):
-        if not CardOwner.check_permissions(request):
-            return HttpResponse("Brak uprawnien")
-        if CardOwner.objects.get(user=request.user.id).force_password_change_check():
-            return redirect('/profil/zmianaHasla/')
-        return HttpResponse("Card owner View")
+        # if not CardOwner.check_permissions(request):
+        #     return HttpResponse("Brak uprawnien")
+        # if CardOwner.objects.get(user=request.user.id).force_password_change_check():
+        #     return redirect('/profil/zmianaHasla/')
+
+        current_ID = request.user.id
+        user = User.objects.get(id=current_ID)
+        name = user.name
+        surname = user.surname
+
+        return render(request, 'card_owner_profile.html', {'name': name, 'surname': surname})
 
 
 class SellerView(View):

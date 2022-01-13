@@ -1,0 +1,24 @@
+.col-70 {
+  float: left;
+  width: 70%;
+  margin-top: 6px;
+  padding-left: 5%;
+}
+
+.col-30 {
+  float: left;
+  width: 30%;
+  margin-top: 6px;
+}
+
+.col-30 > p {
+    font-weight: bold;
+}
+
+p {
+    font-size: 1.3em;
+}
+
+form {
+    margin-left: 20%;
+}
