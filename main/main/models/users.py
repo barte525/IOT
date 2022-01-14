@@ -92,3 +92,21 @@ def create_init_users():
     martyna.save()
     CardOwner(user=martyna).save()
 
+
+def create_user(email, password, name, surname):
+    user = User.objects.create_user(email=email, password=password, name=name, surname=surname)
+    user.save()
+    return user
+
+
+def create_card_owner(email, password, name, surname):
+    user = CardOwner(user=create_user(email, password, name, surname))
+    user.save()
+    return user
+
+
+def create_seller(email, password, name, surname):
+    user = Seller(user=create_user(email, password, name, surname))
+    user.save()
+    return user
+

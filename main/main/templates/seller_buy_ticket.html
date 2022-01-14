@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Count points{% endblock %}
+{% block title %}Zakup biletu{% endblock %}
 
 {% block head %}
     {% load static %}
@@ -28,9 +28,9 @@
                     <label for="select-ticket-type" class="col-sm-2 col-form-label">Bilet</label>
                      <div class="col-sm-10">
                         <select class="form-select" name="ticketId" id="select-ticket-type" aria-label="Wybierz rodzaj biletu" required>
-                            <option value="c5ecbde1-cbf4-11e5-a759-6096cb89d9a5">Bilet na 10 dni; 10zł</option>
-                            <option value="2">Bilet na 20 dni; 20zł</option>
-                            <option value="3">Bilet na 30 dni; 30zł</option>
+                            {% for ticket in tickets %}
+                                <option value="{{ ticket.id }}">Bilet {{ ticket.days_amount }} dniowy; {{ticket.price|floatformat:2 }}zł</option>
+                            {% endfor %}
                         </select>
                      </div>
                 </div>

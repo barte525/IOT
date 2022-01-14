@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Count points{% endblock %}
+{% block title %}Zakup biletu{% endblock %}
 
 {% block head %}
     {% load static %}
@@ -49,7 +49,7 @@
                         <p>Cena biletu</p>
                     </div>
                     <div class="col-70">
-                        <p>{{price}}zł</p>
+                        <p>{{price|floatformat:2}}zł</p>
                     </div>
                 </div>
 

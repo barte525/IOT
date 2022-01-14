@@ -14,6 +14,7 @@ class CardOwnerOfferView(View):
 
         return render(request, 'card_owner_offer.html', {'tickets': tickets})
 
+
 class CardOwnerStatusView(View):
     def get(self, request):
         if not CardOwner.check_permissions(request):
@@ -21,6 +22,7 @@ class CardOwnerStatusView(View):
 
 
         return render(request, 'card_owner_ticket.html')
+
 
 class CardOwnerBuyTicketView(View):
     def get(self, request):

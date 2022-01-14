@@ -33,7 +33,8 @@ urlpatterns = [
                                                                           template_name='password_change.html')),
     path('profil/sprzedawca/rejestracja/', RegisterUser.as_view()),
     path('profil/sprzedawca/zakupBiletu', SellerBuyTicket.as_view()),
-    path('profil/sprzedawca/zakupBiletu/<uuid:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
+    path('profil/sprzedawca/zakupBiletu/<str:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
+    path('profil/sprzedawca/zakupBiletu/sukces', SellerBuyTicketSave.as_view()),
 
     path('profil/uzytkownikKarty/oferta', CardOwnerOfferView.as_view()),
     path('profil/uzytkownikKarty/statusKarty', CardOwnerStatusView.as_view()),
