@@ -18,13 +18,8 @@ terminal_id = "T0"
 # The broker name or IP address - server.
 broker = "192.168.56.1"
 #broker = "localhost"
-
 # The MQTT client.
 client = mqtt.Client()
-
-# The main window.
-root = tk.Tk()
-
 
 # Process message received from server
 def process_message(client, userdata, message):
@@ -45,7 +40,7 @@ def call_worker(card_id):
 
 # Notifying about connection/disconnection
 def notify_server(connected):
-    if connected:
+    if connected:   
         client.publish("terminal/connections", f"{terminal_id}.connected")
     else:
         client.publish("terminal/connections", f"{terminal_id}.disconnected")
@@ -66,6 +61,9 @@ def disconnect_from_broker():
     client.disconnect()
 
 #------------------- GUI -----------------
+
+# The main window.
+root = tk.Tk()
 
 # Last screen showing info about ticket, its owner and button to come back to first screen
 def show_card_info(name, surname, valid, validTo):
@@ -103,14 +101,26 @@ def show_card_info(name, surname, valid, validTo):
     return_btn = tk.Button(frame, text="Powrót", command=show_main)
     return_btn.place(relx=0.375, rely=0.65, relwidth=0.25, relheight=0.15)
 
-# Handling event simulating scanning card - only one key
-# If you want to use it - uncomment "bind" line and comment lines with id_input, id_btn in show_main
-def handler(event):
+# Handling event simulating scanning card - hold key for more than 2 seconds
+# If you want to use it - uncomment "bind" lines and comment lines with id_input, id_btn in show_main
+first_time = None
+def handler_keypressed(event):
     if not event.char.isdigit():
         return
-    root.unbind("<Key>")
-    show_waiting()
-    call_worker(event.char)
+
+    global first_time
+
+    if first_time == None:
+        first_time = event.time
+    elif event.time - first_time > 2000:
+        root.unbind("<Key>")
+        root.unbind("<KeyRelease>")
+        show_waiting()
+        call_worker(event.char)
+
+def handler_keyreleased(event):
+    global first_time
+    first_time = None
 
 # Screen showing confirmation of the scan and an ask for waiting.
 def show_waiting():
@@ -148,27 +158,28 @@ def clean_widget(widget):
 # First screen - waiting for card
 def show_main():
     # Binding event handler on key press
-    #root.bind("<Key>", handler)
+    root.bind("<Key>", handler_keypressed)
+    root.bind("<KeyRelease>", handler_keyreleased)
 
     frame = root.winfo_children()[0].winfo_children()[0]
 
     clean_widget(frame)
 
     intro_label = tk.Label(frame, text="Proszę przyłożyć kartę:")
-    intro_label.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.25)
+    intro_label.place(relx=0.05, rely=0.375, relwidth=0.9, relheight=0.25)
 
-    id_input = tk.Entry(frame)
-    id_input.place(relx=0.20, rely=0.3, relwidth=0.4, relheight=0.1)
+    #id_input = tk.Entry(frame)
+    #id_input.place(relx=0.20, rely=0.3, relwidth=0.4, relheight=0.1)
 
-    id_btn = tk.Button(frame, text="Skanuj", command=lambda: after_scanned(id_input.get()))
-    id_btn.place(relx=0.60, rely=0.3, relwidth=0.2, relheight=0.1)
+    #id_btn = tk.Button(frame, text="Skanuj", command=lambda: after_scanned(id_input.get()))
+    #id_btn.place(relx=0.60, rely=0.3, relwidth=0.2, relheight=0.1)
 
 
 def run_sender():
     connect_to_broker()
     create_main_window()
 
-
+    
     client.loop_start()
     # Start to display window (It will stay here until window is displayed)
     root.mainloop()
