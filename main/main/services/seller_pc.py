@@ -12,6 +12,7 @@ broker = "localhost"
 
 # The MQTT client.
 client = mqtt.Client()
+client.tls_set("main\main\certs\ca.crt",tls_version=2)
 
 # # Processing message from seller terminal depending on the topic (connections vs scanned cards)
 def process_message(client, userdata, message):
@@ -29,7 +30,7 @@ def process_message(client, userdata, message):
 
 # Connect to the broker.
 def connect_to_broker():
-    client.connect(broker)
+    client.connect(broker, port=8883)
     client.on_message = process_message
     client.on_disconnect = disconnect_from_broker
     # Starts client and subscribe.

@@ -6,14 +6,16 @@ import paho.mqtt.client as mqtt
 terminal_id = "T0"
 
 # The broker name or IP address - seller's PC.
-broker = "192.168.56.1"
+#broker = "192.168.56.1"
+broker = "server"
 
 # The MQTT client.
 client = mqtt.Client()
+client.tls_set("main\main\certs\ca.crt",tls_version=2)
 
 # Connect to the broker.
 def connect_to_broker():
-    client.connect(broker)
+    client.connect(broker, port=8883)
     # Send message about conenction.
     notify_server(True)
 

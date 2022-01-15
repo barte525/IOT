@@ -16,10 +16,11 @@ terminal_id = "T0"
 #------------- MQTT----------------
 
 # The broker name or IP address - server.
-broker = "192.168.56.1"
-#broker = "localhost"
+#broker = "192.168.56.1"
+broker = "server"
 # The MQTT client.
 client = mqtt.Client()
+client.tls_set("main\main\certs\ca.crt",tls_version=2)
 
 # Process message received from server
 def process_message(client, userdata, message):
@@ -47,7 +48,7 @@ def notify_server(connected):
 
 # Connect to the broker.
 def connect_to_broker():
-    client.connect(broker)
+    client.connect(broker, port=8883)
     client.subscribe(f"server/{terminal_id}")
     client.on_message = process_message
     # Send message about connection.
@@ -117,6 +118,7 @@ def handler_keypressed(event):
         root.unbind("<KeyRelease>")
         show_waiting()
         call_worker(event.char)
+        first_time = None
 
 def handler_keyreleased(event):
     global first_time
