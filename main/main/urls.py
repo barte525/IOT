@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from main.views.manage_profiles import ManageProfiles, CardOwnerView, SellerView
 from main.views.main import Main
 from main.views.register import RegisterUser
 from main.views.seller_buy import SellerBuyTicket, SellerBuyTicketSave
-from main.views.card_owner import CardOwnerOfferView, CardOwnerStatusView, CardOwnerBuyTicketView
+from main.views.card_owner import CardOwnerOfferView, CardOwnerStatusView, CardOwnerBuyTicketView, \
+    CardOwnerConfirmBuyTicketView
 
 urlpatterns = [
     path('', Main.as_view()),
@@ -36,8 +37,14 @@ urlpatterns = [
     path('profil/sprzedawca/zakupBiletu/<str:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
     path('profil/sprzedawca/zakupBiletu/sukces', SellerBuyTicketSave.as_view()),
 
-    path('profil/uzytkownikKarty/oferta', CardOwnerOfferView.as_view()),
-    path('profil/uzytkownikKarty/statusKarty', CardOwnerStatusView.as_view()),
-    path('profil/uzytkownikKarty/zakupBiletu', CardOwnerBuyTicketView.as_view()),
+    path('profil/uzytkownikKarty/', include([
+        path('oferta', CardOwnerOfferView.as_view()),
+        path('statusKarty', CardOwnerStatusView.as_view()),
+        path('zakupBiletu/', include([
+            path('<uuid:ticket_id>', CardOwnerBuyTicketView.as_view()),
+            path('zatwierdzenie', CardOwnerConfirmBuyTicketView.as_view()),
+            path('zatwierdzenie/<uuid:trans_id>', CardOwnerConfirmBuyTicketView.as_view()),
+        ])),
+    ])),
 
 ]

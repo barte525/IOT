@@ -15,7 +15,7 @@
                             <h5 class="card-title">Bilet {{ ticket.days_amount }} dni</h5>
                             <p class="card-text">Bilet {{ ticket.days_amount }} dniowy umożliwiający podróżowanie wszystkimi liniami</p>
                             <p>{{ ticket.price|floatformat:2 }} zł</p>
-                            <a href="#" class="btn btn-outline-info">Zakup</a>
+                            <a href="/profil/uzytkownikKarty/zakupBiletu/{{ ticket.id }}" class="btn btn-outline-info">Zakup</a>
                         </div>
                     </div>
                 </div>

@@ -7,42 +7,48 @@
 
 {% block content %}
     <div class="container mt-5">
-
-        <div class="form-group mb-3 row">
-            .
-            <label class="col-2 offset-3 col-form-label">Liczba dni</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="7" aria-describedby="basic-addon1" disabled/>
+        <form action="/profil/uzytkownikKarty/zakupBiletu/zatwierdzenie" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+            <input type="hidden" name="card_id" value="{{ card.id }}">
+            <div class="form-group mb-3 row">
+                <label class="col-2 offset-3 col-form-label">Liczba dni</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" value="{{ ticket.days_amount }}"
+                           aria-describedby="basic-addon1" disabled/>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group mb-3 row">
-            <label class="col-2 offset-3 col-form-label">Ważny od</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="10.01.2022" aria-describedby="basic-addon1" disabled>
+            <div class="form-group mb-3 row">
+                <label class="col-2 offset-3 col-form-label">Ważny od</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" value="{{ start_day }}" aria-describedby="basic-addon1"
+                           disabled>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group mb-3 row">
-            <label class="col-2 offset-3 col-form-label">Ważny do</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="16.01.2022" aria-describedby="basic-addon1" disabled>
+            <div class="form-group mb-3 row">
+                <label class="col-2 offset-3 col-form-label">Ważny do</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" value="{{ card.ticket_expiration_date }}"
+                           aria-describedby="basic-addon1" disabled>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group mb-3 row">
-            <label class="col-2 offset-3 col-form-label">Cena</label>
+            <div class="form-group mb-3 row">
+                <label class="col-2 offset-3 col-form-label">Cena</label>
                 <div class="input-group mb-3 col-4">
-                    <input type="text" class="form-control" value="30.00" disabled>
+                    <input type="text" class="form-control" value="{{ ticket.price|floatformat:2 }}" disabled>
                     <div class="input-group-append">
                         <span class="input-group-text">zł</span>
                     </div>
                 </div>
-        </div>
-        <div class="row justify-content-end">
-            <div class="col-auto">
-                <button class="btn btn-success mt-4">Dalej</button>
             </div>
-        </div>
+            <div class="row justify-content-end">
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-success" value="Dalej">
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

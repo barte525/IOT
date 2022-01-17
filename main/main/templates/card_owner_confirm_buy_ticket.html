@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Zakup biletu{% endblock %}
+
+{% block above_content %}
+    {% if success %}
+        <h1>Potwierdzenie zakupu biletu</h1>
+    {% else %}
+        <h1>Trwa przetwarzanie płatności...</h1>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if success %}
+        <div id="alert" class="alert alert-success" role="alert">
+            <h2 class="alert-heading">Bilet został zakupiony!</h2>
+            <p>Na karcie jest zapisany ważny bilet. Już dzisiaj można z niej korzystać.</p>
+            </br>
+            <p>Data wygaśnięcia biletu: {{ new_exp_date|date:'d.m.Y' }}</p>
+            <p>Numer transakcji: {{ trans_id }}</p>
+            <hr>
+            <p class="mb-0"><a href="/profil/uzytkownikKarty" id="back-to-profile" class="btn btn-primary btn-lg"
+                               role="button">Powrót do profilu</a></p>
+        </div>
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="spinner-grow text-success" style="width: 6rem; height: 6rem" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+    {% if not success %}
+        <script>
+            const redirectToSuccess = () => {
+                window.location.href = "/profil/uzytkownikKarty/zakupBiletu/zatwierdzenie/{{ trans_id }}";
+            }
+            setTimeout(redirectToSuccess, 3500);
+
+        </script>
+    {% endif %}
+{% endblock %}
