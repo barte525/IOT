@@ -18,9 +18,13 @@ terminal_id = "T0"
 # The broker name or IP address - server.
 #broker = "192.168.56.1"
 broker = "server"
+
 # The MQTT client.
 client = mqtt.Client()
-client.tls_set("main\main\certs\ca.crt",tls_version=2)
+client.tls_set("D:\Studia\IoT\projekt fork\IOT\main\main\certs\ca.crt",
+    "D:\Studia\IoT\projekt repo\IOT\main\main\certs\client.crt",
+    "D:\Studia\IoT\projekt repo\IOT\main\main\certs\client.key",
+    tls_version=2)
 
 # Process message received from server
 def process_message(client, userdata, message):
@@ -37,7 +41,7 @@ def process_message(client, userdata, message):
 
 # Publish a message with number of scanned card
 def call_worker(card_id):
-    client.publish(f"terminal/{terminal_id}", terminal_id + "." + card_id)
+    client.publish(f"terminal/scanned", terminal_id + "." + card_id)
 
 # Notifying about connection/disconnection
 def notify_server(connected):

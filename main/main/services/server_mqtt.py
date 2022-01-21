@@ -11,7 +11,10 @@ broker = "server"
 
 # The MQTT client.
 client = mqtt.Client()
-client.tls_set("main\main\certs\ca.crt",tls_version=2)
+client.tls_set("/home/szymcio/IOT/fork/IOT/main/main/certs/ca.crt",
+    "/home/szymcio/IOT/fork/IOT/main/main/certs/client.crt",
+    "/home/szymcio/IOT/fork/IOT/main/main/certs/client.key",
+    tls_version=2)
 
 # Processing message from seller terminal depending on the topic (connections vs scanned cards)
 # TODO Selecting ticket info from database in 'else' part of if-else statement
