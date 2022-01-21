@@ -2,31 +2,32 @@
 
 import paho.mqtt.client as mqtt
 from tkinter import Tk
-# When used on windows requires pywin32 library installed (not imported, f.e. via pip)
-# or Xclip package on Linux (f.e. via apt-get)
-import xerox
+from pynput.keyboard import Key, Controller
+
+keyboard = Controller()
 
 # The broker name or IP address - seller's PC.
-broker = "localhost"
+broker = "server"
 #broker = "192.168.56.1"
 
 # The MQTT client.
 client = mqtt.Client()
-client.tls_set("main\main\certs\ca.crt",tls_version=2)
+client.tls_set("/home/szymcio/IOT/fork/IOT/main/main/certs/ca.crt",tls_version=2)
 
-# # Processing message from seller terminal depending on the topic (connections vs scanned cards)
+# Processing message from seller terminal depending on the topic (connections vs scanned cards)
 def process_message(client, userdata, message):
     # Decode message.
     message_decoded = str(message.payload.decode("utf-8"))
 
-    # Info about connected devices and subscribing to topic related to given terminal.
+    # Info about connected devices.
     if message.topic == "seller/connections":
         message_decoded = message_decoded.split(".")
         print(message_decoded[0] + " : " + message_decoded[1])
-    # Printing which card was scanned and copying its id to the clipboard
+
+    # Printing which card was scanned and typing it in the focused place
     else:
         print("Scanned card: " + message_decoded)
-        xerox.copy(message_decoded)
+        keyboard.type(message_decoded)
 
 # Connect to the broker.
 def connect_to_broker():
@@ -45,11 +46,10 @@ def disconnect_from_broker():
     client.loop_stop()
     client.disconnect()
 
-
 def run_receiver():
     connect_to_broker()
     #disconnect_from_broker()
 
-
 if __name__ == "__main__":
+
     run_receiver()
