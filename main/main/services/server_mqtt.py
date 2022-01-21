@@ -22,8 +22,6 @@ def process_message(client, userdata, message):
     # Info about connected devices and subscribing to topic related to given terminal.
     if message.topic == "terminal/connections":
         print(message_decoded[0] + " : " + message_decoded[1])
-        if(message_decoded[1] == "connected"):
-            client.subscribe(f"terminal/{message_decoded[0]}")
     # Printing which card was scanned and sending info to terminal
     else:
         print(f"{time.ctime()}, terminal: {message_decoded[0]} scanned card {message_decoded[1]}")
@@ -38,6 +36,7 @@ def connect_to_broker():
     client.on_disconnect = disconnect_from_broker
     # Starts client and subscribe.
     client.subscribe("terminal/connections")
+    client.subscribe("terminal/scanned")
     client.loop_forever()
 
 # Disconnet the client.
