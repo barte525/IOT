@@ -21,9 +21,9 @@ broker = "server"
 
 # The MQTT client.
 client = mqtt.Client()
-client.tls_set("D:\Studia\IoT\projekt fork\IOT\main\main\certs\ca.crt",
-    "D:\Studia\IoT\projekt repo\IOT\main\main\certs\client.crt",
-    "D:\Studia\IoT\projekt repo\IOT\main\main\certs\client.key",
+client.tls_set("D:\Studia\IoT\projekt repo\IOT\main\main\certs\inspector\ca.crt",
+    "D:\Studia\IoT\projekt repo\IOT\main\main\certs\inspector\client.crt",
+    "D:\Studia\IoT\projekt repo\IOT\main\main\certs\inspector\client.key",
     tls_version=2)
 
 # Process message received from server

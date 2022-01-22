@@ -11,9 +11,9 @@ broker = "server"
 
 # The MQTT client.
 client = mqtt.Client()
-client.tls_set("/home/szymcio/IOT/fork/IOT/main/main/certs/ca.crt",
-    "/home/szymcio/IOT/fork/IOT/main/main/certs/client.crt",
-    "/home/szymcio/IOT/fork/IOT/main/main/certs/client.key",
+client.tls_set("/home/szymcio/IOT/main/main/certs/server_client/ca.crt",
+    "/home/szymcio/IOT/main/main/certs/server_client/client.crt",
+    "/home/szymcio/IOT/main/main/certs/server_client/client.key",
     tls_version=2)
 
 # Processing message from seller terminal depending on the topic (connections vs scanned cards)
