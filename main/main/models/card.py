@@ -3,6 +3,7 @@ from .users import CardOwner
 import uuid
 from datetime import timedelta, date
 
+
 class Card(models.Model):
     card_id = models.CharField(max_length=30, unique=True)
     user = models.ForeignKey(CardOwner, on_delete=models.CASCADE)

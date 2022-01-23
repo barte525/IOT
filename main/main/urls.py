@@ -22,6 +22,7 @@ from main.views.register import RegisterUser
 from main.views.seller_buy import SellerBuyTicket, SellerBuyTicketSave
 from main.views.card_owner import CardOwnerOfferView, CardOwnerStatusView, CardOwnerBuyTicketView, \
     CardOwnerConfirmBuyTicketView
+from main.views.api import CardApi
 
 urlpatterns = [
     path('', Main.as_view()),
@@ -46,5 +47,7 @@ urlpatterns = [
             path('zatwierdzenie/<uuid:trans_id>', CardOwnerConfirmBuyTicketView.as_view()),
         ])),
     ])),
+
+    path('api/czy_aktywna/<str:cardId>', CardApi.as_view()),
 
 ]

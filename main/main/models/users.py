@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import uuid
+import random
+import string
 
 
 class UserManager(BaseUserManager):
@@ -50,6 +52,10 @@ class User(AbstractBaseUser):
         if CardOwner.objects.filter(user=self.id).exists():
             CardOwner.objects.filter(user=self.id).update(force_password_change=False)
 
+    @staticmethod
+    def generate_random_password(length):
+        return ''.join(random.choice(string.ascii_letters) for i in range(length))
+
 
 class CardOwner(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -88,9 +94,10 @@ def create_init_users():
     martyna = User.objects.create_user(email='martyna@gmail.com', password='Oo', name='Martyna', surname='Grzegorczyk')
     martyna.save()
     Seller(user=martyna).save()
-    martyna = User.objects.create_user(email='pawel@gmail.com', password='Oo', name='pawel', surname='pawel')
+    martyna = User.objects.create_user(email='pawel@gmail.com', password='Oo', name='pawel', surname='pawel')  #Haslo123
     martyna.save()
     CardOwner(user=martyna).save()
+    #martynka@gmail.com Nowe1234 - uzytkownik z karta o id 12345678901234567890
 
 
 def create_user(email, password, name, surname):
@@ -109,4 +116,5 @@ def create_seller(email, password, name, surname):
     user = Seller(user=create_user(email, password, name, surname))
     user.save()
     return user
+
 
