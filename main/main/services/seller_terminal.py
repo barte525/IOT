@@ -11,7 +11,10 @@ broker = "server"
 
 # The MQTT client.
 client = mqtt.Client()
-client.tls_set("main\main\certs\ca.crt",tls_version=2)
+client.tls_set("/home/szymcio/IOT/main/main/certs/server_client/ca.crt",
+    "/home/szymcio/IOT/main/main/certs/server_client/client.crt",
+    "/home/szymcio/IOT/main/main/certs/server_client/client.key",
+    tls_version=2)
 
 # Connect to the broker.
 def connect_to_broker():

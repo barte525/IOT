@@ -6,18 +6,19 @@ from django.http import JsonResponse
 
 class CardApi(View):
     def get(self, request, cardId):
-        not_exists_message = 'karta nie istnieje'
-        not_active_message = 'karta nie jest aktywna'
-        without_ticket_message = 'karta nie ma aktualnego biletu'
-        success_message = 'karta jest aktywna i ma aktualny bilet'
+        not_exists_code = 0
+        not_active_code = 1
+        without_ticket_code = 2
+        expired_ticket_code = 3
+        success_code = 4
         try:
             card = Card.objects.get(card_id=cardId)
         except Card.DoesNotExist:
-            return JsonResponse({'aktywna':'nie', 'opis': not_exists_message})
+            return JsonResponse({'opis': not_exists_code})
         if not card.active:
-            return JsonResponse({'aktywna':'nie', 'opis': not_active_message})
+            return JsonResponse({'opis': not_active_code})
         if not card.ticket_expiration_date:
-            return JsonResponse({'aktywna': 'nie', 'opis': without_ticket_message})
+            return JsonResponse({'opis': without_ticket_code, 'imie': card.user.user.name, 'nazwisko': card.user.user.surname})
         if date.today() > card.ticket_expiration_date:
-            return JsonResponse({'aktywna': 'nie', 'opis': without_ticket_message})
-        return JsonResponse({'aktywna': 'tak', 'opis': success_message})
+            return JsonResponse({'opis': expired_ticket_code, 'imie': card.user.user.name, 'nazwisko': card.user.user.surname, 'termin': card.ticket_expiration_date})
+        return JsonResponse({'opis': success_code, 'imie': card.user.user.name, 'nazwisko': card.user.user.surname, 'termin': card.ticket_expiration_date})

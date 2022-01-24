@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+from django.http import response
 import paho.mqtt.client as mqtt
 import tkinter
 import sqlite3
 import time
+import requests
 
 # The broker name or IP address - this machine.
 broker = "server"
@@ -29,7 +31,16 @@ def process_message(client, userdata, message):
     else:
         print(f"{time.ctime()}, terminal: {message_decoded[0]} scanned card {message_decoded[1]}")
         #Hard-coded info about scanned card - "name, surname, valid to"
-        client.publish(f"server/{message_decoded[0]}", "Jadwiga,Hymel,08/01/2022 17:32")
+        response = requests.get(f"http://127.0.0.1:8000/api/czy_aktywna/{message_decoded[1]}").json()
+
+        if(response['opis'] == 4 or response["opis"] == 3):
+            client.publish(f"server/{message_decoded[0]}", f"{response['opis']},{response['imie']},{response['nazwisko']},{response['termin']}")
+
+        elif response['opis'] == 2: 
+            client.publish(f"server/{message_decoded[0]}", f"{response['opis']},{response['imie']},{response['nazwisko']}")
+            
+        elif response['opis'] == 1 or response['opis'] == 0:
+            client.publish(f"server/{message_decoded[0]}", f"{response['opis']}")
 
 
 # Connect to the broker.

@@ -3,6 +3,7 @@
 import paho.mqtt.client as mqtt
 import tkinter as tk
 import time
+import xerox
 
 WIDTH = 600
 HEIGHT = 480
@@ -32,16 +33,25 @@ def process_message(client, userdata, message):
     # Decode message.
     message_decoded = (str(message.payload.decode("utf-8"))).split(",")
 
-    date = time.strptime(message_decoded[2], "%d/%m/%Y %H:%M")
-    # Update view after 2000ms (2s) to simulate waiting for response
-    if date > time.strptime(time.strftime("%d/%m/%Y %H:%M"), "%d/%m/%Y %H:%M"):
-        root.after(2000, show_card_info, message_decoded[0], message_decoded[1], True, message_decoded[2])
-    else:
-        root.after(2000, show_card_info, message_decoded[0], message_decoded[1], False, message_decoded[2])
+    # Valid ticket
+    if message_decoded[0] == '4':
+        show_card_info(**{'Imię' : message_decoded[1], 'Nazwisko' : message_decoded[2], 'Status':"Ważny", "Ważny do" : message_decoded[3]})
+    # Expired ticket
+    elif message_decoded[0] == '3':
+        show_card_info(**{'Imię' : message_decoded[1], 'Nazwisko' : message_decoded[2], 'Status':"Nieważny!", "Ważny do" : message_decoded[3]})
+    # No ticket
+    elif message_decoded[0] == '2':
+        show_card_info(**{'Imię' : message_decoded[1], 'Nazwisko' : message_decoded[2], 'Status':"Brak biletu!"})
+    # Card is not active
+    elif message_decoded[0] == '1':
+        show_card_info(**{'Status':"Nieaktywna!"})
+    # No such card in database
+    elif message_decoded[0] == '0':
+        show_card_info(**{'Status':"Brak karty w systemie!"})
 
 # Publish a message with number of scanned card
-def call_worker(card_id):
-    client.publish(f"terminal/scanned", terminal_id + "." + card_id)
+def call_worker():
+    client.publish(f"terminal/scanned", terminal_id + "." + xerox.paste())
 
 # Notifying about connection/disconnection
 def notify_server(connected):
@@ -71,40 +81,23 @@ def disconnect_from_broker():
 root = tk.Tk()
 
 # Last screen showing info about ticket, its owner and button to come back to first screen
-def show_card_info(name, surname, valid, validTo):
+def show_card_info(**kwargs):
     frame = root.winfo_children()[0].winfo_children()[0]
     clean_widget(frame)
 
-    name_label = tk.Label(frame, text="Imię:")
-    name_label.place(relx=0, rely=0, relwidth=0.45, relheight=0.1)
+    curr_rely = 0
 
-    name_value = tk.Label(frame, text=name)
-    name_value.place(relx=0.5, rely=0, relwidth=0.45, relheight=0.1)
+    for key, value in kwargs.items():
+        name_label = tk.Label(frame, text=f"{key}:")
+        name_label.place(relx=0, rely=curr_rely, relwidth=0.45, relheight=0.1)
 
-    surname_label = tk.Label(frame, text="Nazwisko:")
-    surname_label.place(relx=0, rely=0.15, relwidth=0.45, relheight=0.1)
+        name_value = tk.Label(frame, text=value)
+        name_value.place(relx=0.5, rely=curr_rely, relwidth=0.45, relheight=0.1)
 
-    surname_value = tk.Label(frame, text=surname)
-    surname_value.place(relx=0.5, rely=0.15, relwidth=0.45, relheight=0.1)
-
-    valid_date = tk.Label(frame, text="Ważna do:")
-    valid_date.place(relx=0, rely=0.3, relwidth=0.45, relheight=0.1)
-
-    valid_date_value = tk.Label(frame, text=validTo)
-    valid_date_value.place(relx=0.5, rely=0.3, relwidth=0.45, relheight=0.1)
-
-    correct = tk.Label(frame, text="Status:")
-    correct.place(relx=0, rely=0.45, relwidth=0.45, relheight=0.1)
-
-    if valid:
-        correct_value = tk.Label(frame, text="Ważny")
-        correct_value.place(relx=0.5, rely=0.45, relwidth=0.45, relheight=0.1)
-    else:
-        correct_value = tk.Label(frame, text="Nieważny!")
-        correct_value.place(relx=0.5, rely=0.45, relwidth=0.45, relheight=0.1)
+        curr_rely += 0.15
 
     return_btn = tk.Button(frame, text="Powrót", command=show_main)
-    return_btn.place(relx=0.375, rely=0.65, relwidth=0.25, relheight=0.15)
+    return_btn.place(relx=0.375, rely=curr_rely+0.05, relwidth=0.25, relheight=0.15)
 
 # Handling event simulating scanning card - hold key for more than 2 seconds
 # If you want to use it - uncomment "bind" lines and comment lines with id_input, id_btn in show_main
@@ -121,7 +114,7 @@ def handler_keypressed(event):
         root.unbind("<Key>")
         root.unbind("<KeyRelease>")
         show_waiting()
-        call_worker(event.char)
+        call_worker()
         first_time = None
 
 def handler_keyreleased(event):
