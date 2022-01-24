@@ -14,55 +14,62 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form-container">
-        <form method="POST">
-            {% csrf_token %}
-                <div class="form-group row">
-                    <div class="col-30">
-                        <p>Posiadacz karty</p>
-                    </div>
-                    <div class="col-70">
-                        <p>{{name}} {{surname}}</p>
-                    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-group row">
+                <div class="col-30">
+                    <p>Posiadacz karty</p>
                 </div>
-
-                <div class="form-group row">
-                    <div class="col-30">
-                        <p>ID Karty</p>
-                    </div>
-                    <div class="col-70">
-                        <p>{{cardId}}</p>
-                    </div>
+                <div class="col-70">
+                    <p>{{name}} {{surname}}</p>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <div class="col-30">
-                        <p>Rodzaj biletu</p>
-                    </div>
-                    <div class="col-70">
-                        <p>Bilet na {{days}} dni</p>
-                    </div>
+            <div class="form-group row">
+                <div class="col-30">
+                    <p>ID Karty</p>
                 </div>
-
-                <div class="form-group row">
-                    <div class="col-30">
-                        <p>Cena biletu</p>
-                    </div>
-                    <div class="col-70">
-                        <p>{{price|floatformat:2}}zł</p>
-                    </div>
+                <div class="col-70">
+                    <p>{{cardId}}</p>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <div class="col-30">
-                        <p>Data wygaśnięcia biletu po zakupie</p>
-                    </div>
-                    <div class="col-70">
-                        <p>{{countedExpDate}}</p>
-                    </div>
+            <div class="form-group row">
+                <div class="col-30">
+                    <p>Rodzaj biletu</p>
                 </div>
+                <div class="col-70">
+                    <p>Bilet na {{days}} dni</p>
+                </div>
+            </div>
 
+            <div class="form-group row">
+                <div class="col-30">
+                    <p>Cena biletu</p>
+                </div>
+                <div class="col-70">
+                    <p>{{price|floatformat:2}}zł</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-30">
+                    <p>Data wygaśnięcia biletu po zakupie</p>
+                </div>
+                <div class="col-70">
+                    <p>{{countedExpDate}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="row-buttons" style="padding-left: 11%; padding-right: 20%; margin-top: 3%;">
+            <div class="col-6 text-left">
+                <a href="/profil/sprzedawca" class="btn btn-danger" role="button">Powrót do profilu</a>
+            </div>
+            <div class="col-6 text-right">
                 <button name="buy-ticket" class="btn btn-primary" type="submit">Zatwierdź</button>
-        </form>
-    </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Zakup biletu{% endblock %}
+
+{% block above_content %}
+    <h1>Rejestracja użytkownika</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="alert" class="alert {{alertClass}}" role="alert">
+        <h2 class="alert-heading">{{messageStatus}}</h2>
+        <p>{{messageDesc}}</p>
+        <hr>
+        <p class="mb-0"><a href="/profil/sprzedawca" id="back-to-profile" class="btn btn-primary btn-lg" role="button">Powrót do profilu</a></p>
+    </div>
+{% endblock %}

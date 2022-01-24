@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from main.views.manage_profiles import ManageProfiles, CardOwnerView, SellerView
 from main.views.main import Main
-from main.views.register import RegisterUser
+from main.views.register import RegisterUser, RegisterUserResponse
 from main.views.seller_buy import SellerBuyTicket, SellerBuyTicketSave
 from main.views.card_owner import CardOwnerOfferView, CardOwnerStatusView, CardOwnerBuyTicketView, \
     CardOwnerConfirmBuyTicketView
@@ -33,10 +33,22 @@ urlpatterns = [
     path('profil/sprzedawca/', SellerView.as_view()),
     path('profil/zmianaHasla/', auth_views.PasswordChangeView.as_view(success_url='/profil/uzytkownikKarty/',
                                                                           template_name='password_change.html')),
-    path('profil/sprzedawca/rejestracja/', RegisterUser.as_view()),
-    path('profil/sprzedawca/zakupBiletu', SellerBuyTicket.as_view()),
-    path('profil/sprzedawca/zakupBiletu/<str:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
-    path('profil/sprzedawca/zakupBiletu/sukces', SellerBuyTicketSave.as_view()),
+    path('profil/sprzedawca/', include([
+        path('rejestracja/', RegisterUser.as_view()),
+        path('rejestracja/', include([
+            path('zatwierdzenie', RegisterUserResponse.as_view()),
+        ])),
+        path('zakupBiletu/', SellerBuyTicket.as_view()),
+        path('zakupBiletu/', include([
+            path('<str:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
+            path('zatwierdzenie', SellerBuyTicketSave.as_view()),
+        ])),
+    ])),
+
+    # path('profil/sprzedawca/rejestracja/', RegisterUser.as_view()),
+    # path('profil/sprzedawca/zakupBiletu', SellerBuyTicket.as_view()),
+    # path('profil/sprzedawca/zakupBiletu/<str:cardId>/<uuid:ticketId>', SellerBuyTicketSave.as_view()),
+    # path('profil/sprzedawca/zakupBiletu/sukces', SellerBuyTicketSave.as_view()),
 
     path('profil/uzytkownikKarty/', include([
         path('oferta', CardOwnerOfferView.as_view()),
