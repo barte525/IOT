@@ -3,17 +3,15 @@
 
 {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'main_page_style.css' %}">
-
 {% endblock %}
 
-{% block above_content %}
-    <h1>System do obsługi biletów okresowych</h1>
-{% endblock %}
 
 {% block content %}
-    <div id="login-redirect">
-         <p>Aby skorzystać z systemu, zaloguj się.</p>
-        <a href="/zaloguj" class="btn btn-primary btn-lg" role="button">Przejdź do strony logowania</a>
+    <div class="jumbotron">
+        <h1 class="display-4">System biletów okresowych MPK Wrocław</h1>
+        <p class="lead">Bilety okresowe na karcie</p>
+        <hr class="my-4">
+        <p>Zapoznaj się z ofertą lub zaloguj w celu zakupu biletu</p>
+        <a class="btn btn-success btn-lg" href="/oferta" role="button">Zobacz ofertę</a>
     </div>
 {% endblock %}

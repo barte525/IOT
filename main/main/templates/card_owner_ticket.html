@@ -3,46 +3,44 @@
 
 {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'base_style.css' %}">
-
 {% endblock %}
 
 {% block above_content %}
-    <h1>Szczegóły karty</h1>
+    <h1 class="text-center mt-3">Szczegóły karty</h1>
 {% endblock %}
 
+
 {% block content %}
-    <div class="container mt-5">
-
-        <div class="form-group mb-3 row">
-            .
-            <label class="col-2 offset-3 col-form-label">Imię</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="{{ card_owner.user.name }}" aria-describedby="basic-addon1" disabled/>
-            </div>
+    <div class="form-group mb-3 row">
+        <label class="col-2 offset-3 col-form-label">Imię</label>
+        <div class="col-4">
+            <input type="text" class="form-control" value="{{ card_owner.user.name }}" aria-describedby="basic-addon1"
+                   disabled/>
         </div>
+    </div>
 
-        <div class="form-group mb-3 row">
-            <label class="col-2 offset-3 col-form-label">Nazwisko</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="{{ card_owner.user.surname }}" aria-describedby="basic-addon1" disabled>
-            </div>
+    <div class="form-group mb-3 row">
+        <label class="col-2 offset-3 col-form-label">Nazwisko</label>
+        <div class="col-4">
+            <input type="text" class="form-control" value="{{ card_owner.user.surname }}"
+                   aria-describedby="basic-addon1" disabled>
         </div>
+    </div>
 
-        <div class="form-group mb-3 row">
-            <label class="col-2 offset-3 col-form-label">Status</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="Aktywna" aria-describedby="basic-addon1" disabled> {# Tutaj musze doczytać żeby ładnie zrobić #}
-            </div>
+    <div class="form-group mb-3 row">
+        <label class="col-2 offset-3 col-form-label">Status</label>
+        <div class="col-4">
+            <input type="text" class="form-control" value="Aktywna" aria-describedby="basic-addon1" disabled>
+            {# Tutaj musze doczytać żeby ładnie zrobić #}
         </div>
+    </div>
 
-        <div class="form-group mb-3 row">
-            <label class="col-2 offset-3 col-form-label">Termin ważności</label>
-            <div class="col-4">
-                <input type="text" class="form-control" value="{{ card.ticket_expiration_date|date:'d.m.Y'}} 23:59:59" aria-describedby="basic-addon1"
-                       disabled>
-            </div>
+    <div class="form-group mb-3 row">
+        <label class="col-2 offset-3 col-form-label">Termin ważności</label>
+        <div class="col-4">
+            <input type="text" class="form-control" value="{{ card.ticket_expiration_date|date:'d.m.Y' }} 23:59:59"
+                   aria-describedby="basic-addon1"
+                   disabled>
         </div>
-        <a href="/profil/uzytkownikKarty" class="btn btn-danger mt-4">Powrót</a>
     </div>
 {% endblock %}

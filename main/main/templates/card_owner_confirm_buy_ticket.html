@@ -3,9 +3,9 @@
 
 {% block above_content %}
     {% if success %}
-        <h1>Potwierdzenie zakupu biletu</h1>
+        <h1 class="text-center mt-3">Potwierdzenie zakupu biletu</h1>
     {% else %}
-        <h1>Trwa przetwarzanie płatności...</h1>
+        <h1 class="text-center mt-3">Trwa przetwarzanie płatności...</h1>
     {% endif %}
 {% endblock %}
 
@@ -18,7 +18,7 @@
             <p>Data wygaśnięcia biletu: {{ new_exp_date|date:'d.m.Y' }}</p>
             <p>Numer transakcji: {{ trans_id }}</p>
             <hr>
-            <p class="mb-0"><a href="/profil/uzytkownikKarty" id="back-to-profile" class="btn btn-primary btn-lg"
+            <p class="mb-0"><a href="/profil/" id="back-to-profile" class="btn btn-primary btn-lg"
                                role="button">Powrót do profilu</a></p>
         </div>
     {% else %}

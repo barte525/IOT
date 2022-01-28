@@ -3,20 +3,15 @@
 
 {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'seller_profile_style.css' %}">
 {% endblock %}
 
 {% block above_content %}
-    <h1>Witaj, sprzedawco {{name}} {{surname}}</h1>
+    <h1 class="text-center mt-3">Witaj, sprzedawco {{name}} {{surname}}</h1>
 {% endblock %}
 
 {% block content %}
-    <div id="register-user">
-        <a href="rejestracja" id="register-href" class="btn btn-primary btn-lg" role="button">Zarejestruj użytkownika karty</a>
-        <a href="zakupBiletu" id="sell-href" class="btn btn-primary btn-lg" role="button">Zakup bilet użytkownikowi karty</a>
-    </div>
-    <br>
-    <div id="change-pwd">
-        <a href="/profil/zmianaHasla" id="change-password" class="btn btn-primary btn-lg" role="button">Zmień hasło</a>
-    </div>
+        <div class="d-flex justify-content-around mt-5">
+            <a href="rejestracja" id="register-href" class="btn btn-primary btn-lg" role="button">Zarejestruj użytkownika karty</a>
+            <a href="zakupBiletu" id="sell-href" class="btn btn-primary btn-lg" role="button">Zakup bilet użytkownikowi karty</a>
+        </div>
 {% endblock %}

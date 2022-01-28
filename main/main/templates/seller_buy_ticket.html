@@ -3,18 +3,16 @@
 
 {% block head %}
     {% load static %}
-
-    <link rel="stylesheet" type="text/css" href="{% static 'seller_buy_ticket_style.css' %}">
 {% endblock %}
 
 {% block above_content %}
-    <h1>Zakup biletu na wskazaną kartę</h1>
+    <h1 class="text-center mt-3">Zakup biletu na wskazaną kartę</h1>
 {% endblock %}
 
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-         <div class="form-container">
+         <div class="col-md-8 mx-auto">
             <div class="form-group row">
                  <label for="input-card-id" class="col-sm-2 col-form-label">ID Karty</label>
                     <div class="col-sm-10">
@@ -25,7 +23,7 @@
             <div class="form-group row">
                 <label for="select-ticket-type" class="col-sm-2 col-form-label">Bilet</label>
                  <div class="col-sm-10">
-                    <select class="form-select" name="ticketId" id="select-ticket-type" aria-label="Wybierz rodzaj biletu" required>
+                    <select class="form-control" name="ticketId" id="select-ticket-type" aria-label="Wybierz rodzaj biletu" required>
                         {% for ticket in tickets %}
                             <option value="{{ ticket.id }}">Bilet {{ ticket.days_amount }} dniowy; {{ticket.price|floatformat:2 }}zł</option>
                         {% endfor %}
@@ -35,11 +33,11 @@
 
         </div>
 
-        <div class="row" id="row-buttons" style="padding-left: 11%; padding-right: 20%; margin-top: 3%;">
-            <div class="col-6 text-left">
+        <div class="row justify-content-between col-md-11 mx-auto">
+            <div class="col-auto">
                 <a href="/profil/sprzedawca" class="btn btn-danger" role="button">Powrót do profilu</a>
             </div>
-            <div class="col-6 text-right">
+            <div class="col-auto">
                 <button name="buy-ticket" class="btn btn-primary" type="submit">Zatwierdź</button>
             </div>
         </div>
