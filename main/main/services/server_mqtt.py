@@ -19,7 +19,6 @@ client.tls_set("/home/szymcio/IOT/main/main/certs/server_client/ca.crt",
     tls_version=2)
 
 # Processing message from seller terminal depending on the topic (connections vs scanned cards)
-# TODO Selecting ticket info from database in 'else' part of if-else statement
 def process_message(client, userdata, message):
     # Decode message.
     message_decoded = (str(message.payload.decode("utf-8"))).split(".")
