@@ -1,21 +1,12 @@
 from datetime import date, timedelta, datetime
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.db import transaction
 
 from main.models import CardOwner, Ticket, Card, Transaction
-
-
-class CardOwnerOfferView(View):
-    def get(self, request):
-        if not CardOwner.check_permissions(request):
-            return HttpResponse("Brak uprawnien")
-
-        tickets = Ticket.objects.all()
-
-        return render(request, 'card_owner_offer.html', {'tickets': tickets})
 
 
 class CardOwnerStatusView(View):
@@ -33,7 +24,7 @@ class CardOwnerStatusView(View):
 class CardOwnerBuyTicketView(View):
     def get(self, request, ticket_id):
         if not CardOwner.check_permissions(request):
-            return HttpResponse("Brak uprawnien")
+            return redirect('%s?next=%s' % ('/zaloguj/', request.path))
         ticket = Ticket.objects.get(id=ticket_id)
         card = Card.objects.get(user__user__id=request.user.id)
         start_day = date.today() \

@@ -2,53 +2,51 @@
 {% block title %}Zakup biletu{% endblock %}
 
 {% block above_content %}
-    <h1>Zakup biletu</h1>
+    <h1 class="text-center mt-3">Zakup biletu</h1>
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <form action="/profil/uzytkownikKarty/zakupBiletu/zatwierdzenie" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
-            <input type="hidden" name="card_id" value="{{ card.id }}">
-            <div class="form-group mb-3 row">
-                <label class="col-2 offset-3 col-form-label">Liczba dni</label>
-                <div class="col-4">
-                    <input type="text" class="form-control" value="{{ ticket.days_amount }}"
-                           aria-describedby="basic-addon1" disabled/>
-                </div>
+    <form action="/profil/uzytkownikKarty/zakupBiletu/zatwierdzenie" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+        <input type="hidden" name="card_id" value="{{ card.id }}">
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Liczba dni</label>
+            <div class="col-4">
+                <input type="text" class="form-control" value="{{ ticket.days_amount }}"
+                       aria-describedby="basic-addon1" disabled/>
             </div>
+        </div>
 
-            <div class="form-group mb-3 row">
-                <label class="col-2 offset-3 col-form-label">Ważny od</label>
-                <div class="col-4">
-                    <input type="text" class="form-control" value="{{ start_day }}" aria-describedby="basic-addon1"
-                           disabled>
-                </div>
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Ważny od</label>
+            <div class="col-4">
+                <input type="text" class="form-control" value="{{ start_day }}" aria-describedby="basic-addon1"
+                       disabled>
             </div>
+        </div>
 
-            <div class="form-group mb-3 row">
-                <label class="col-2 offset-3 col-form-label">Ważny do</label>
-                <div class="col-4">
-                    <input type="text" class="form-control" value="{{ card.ticket_expiration_date }}"
-                           aria-describedby="basic-addon1" disabled>
-                </div>
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Ważny do</label>
+            <div class="col-4">
+                <input type="text" class="form-control" value="{{ card.ticket_expiration_date }}"
+                       aria-describedby="basic-addon1" disabled>
             </div>
+        </div>
 
-            <div class="form-group mb-3 row">
-                <label class="col-2 offset-3 col-form-label">Cena</label>
-                <div class="input-group mb-3 col-4">
-                    <input type="text" class="form-control" value="{{ ticket.price|floatformat:2 }}" disabled>
-                    <div class="input-group-append">
-                        <span class="input-group-text">zł</span>
-                    </div>
+        <div class="form-group mb-3 row">
+            <label class="col-2 offset-3 col-form-label">Cena</label>
+            <div class="input-group mb-3 col-4">
+                <input type="text" class="form-control" value="{{ ticket.price|floatformat:2 }}" disabled>
+                <div class="input-group-append">
+                    <span class="input-group-text">zł</span>
                 </div>
             </div>
-            <div class="row justify-content-end">
-                <div class="col-auto">
-                    <input type="submit" class="btn btn-success" value="Dalej">
-                </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <input type="submit" class="btn btn-success" value="Dalej">
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 {% endblock %}

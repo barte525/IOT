@@ -8,7 +8,7 @@ class ManageProfiles(View):
     def get(self, request):
         current_ID = request.user.id
         if CardOwner.objects.filter(user=current_ID).exists():
-            return redirect('/profil/uzytkownikKarty')
+            return redirect('/profil/uzytkownikKarty/statusKarty')
         if Seller.objects.filter(user=current_ID).exists():
             return redirect('/profil/sprzedawca')
         else:
