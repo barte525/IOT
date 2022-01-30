@@ -41,7 +41,7 @@ class RegisterUser(View):
         Card(card_id=card_id, user=card_user).save()
         msgStatus = "Dodano użytkownika"
         msgDesc = "Stworzenie użytkownika powiodło się, wygenerowane hasło: " + password
-        alertClass = "alert-danger"
+        alertClass = "alert-success"
         return render(request, 'register_response.html',
                       {'messageStatus': msgStatus, 'messageDesc': msgDesc, 'alertClass': alertClass})
 
