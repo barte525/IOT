@@ -7,9 +7,9 @@ from django.http import HttpResponse
 class ManageProfiles(View):
     def get(self, request):
         current_ID = request.user.id
-        if CardOwner.objects.get(user=request.user.id).force_password_change_check():
-            return redirect('/profil/zmianaHasla/')
         if CardOwner.objects.filter(user=current_ID).exists():
+            if CardOwner.objects.get(user=request.user.id).force_password_change_check():
+                return redirect('/profil/zmianaHasla/')
             return redirect('/profil/uzytkownikKarty/statusKarty')
         if Seller.objects.filter(user=current_ID).exists():
             return redirect('/profil/sprzedawca')
