@@ -21,12 +21,17 @@
             <input type="password" name="password" autocomplete="current-password" required="" class="form-control"
                    id="password_id"
                    placeholder="hasło">
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
-                    <p class="text-danger">{{ error }}</p>
-                {% endfor %}
-            {% endif %}
         </div>
+        {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+            <div class="alert alert-danger with-close alert-dismissible fade show">
+                {{error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
         <div class="d-flex justify-content-end col-md-6 mx-auto">
             <button type="submit" class="btn btn-primary">Zaloguj</button>
         </div>
