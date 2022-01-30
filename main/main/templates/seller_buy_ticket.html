@@ -25,7 +25,12 @@
                  <div class="col-sm-10">
                     <select class="form-control" name="ticketId" id="select-ticket-type" aria-label="Wybierz rodzaj biletu" required>
                         {% for ticket in tickets %}
-                            <option value="{{ ticket.id }}">Bilet {{ ticket.days_amount }} dniowy; {{ticket.price|floatformat:2 }}zł</option>
+                            <option
+                                    value="{{ ticket.id }}"
+                                    {% if selected_ticket_id == ticket.id %} selected {% endif %}
+                            >
+                                Bilet {{ ticket.days_amount }} dniowy; {{ticket.price|floatformat:2 }}zł
+                            </option>
                         {% endfor %}
                     </select>
                  </div>

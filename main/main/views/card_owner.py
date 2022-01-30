@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.db import transaction
 
-from main.models import CardOwner, Ticket, Card, Transaction
+from main.models import CardOwner, Ticket, Card, Transaction, Seller
 
 
 class CardOwnerStatusView(View):
@@ -24,6 +24,8 @@ class CardOwnerStatusView(View):
 class CardOwnerBuyTicketView(View):
     def get(self, request, ticket_id):
         if not CardOwner.check_permissions(request):
+            if Seller.check_permissions(request):
+                return redirect(f'/profil/sprzedawca/zakupBiletu?ticket_id={ticket_id}')
             return redirect('%s?next=%s' % ('/zaloguj/', request.path))
         ticket = Ticket.objects.get(id=ticket_id)
         card = Card.objects.get(user__user__id=request.user.id)

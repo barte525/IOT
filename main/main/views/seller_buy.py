@@ -1,3 +1,5 @@
+import uuid
+
 from django.views import View
 from django.shortcuts import render, redirect
 from main.models.users import Seller
@@ -12,7 +14,11 @@ class SellerBuyTicket(View):
         if not Seller.check_permissions(request):
             return HttpResponse("Brak uprawnien")
         tickets = list(Ticket.objects.all())
-        return render(request, 'seller_buy_ticket.html', {'tickets': tickets})
+        selected_ticket_id = None
+        if request.GET.get('ticket_id') is not None:
+            selected_ticket_id = uuid.UUID(f"urn:uuid:{request.GET.get('ticket_id')}")
+
+        return render(request, 'seller_buy_ticket.html', {'tickets': tickets, 'selected_ticket_id': selected_ticket_id})
 
     def post(self, request):
         if not Seller.check_permissions(request):
