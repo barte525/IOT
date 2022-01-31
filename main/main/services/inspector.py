@@ -73,7 +73,7 @@ def connect_to_broker():
         # Send message about connection.
         notify_server(True)
         connect_flag = True
-    except TimeoutError:
+    except (TimeoutError, ConnectionRefusedError):
         show_connection_failed()
         connect_flag = False
 
